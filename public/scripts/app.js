@@ -5,86 +5,88 @@ console.log("App.js is running.");
 var navigation = {
     title: "Indecision App",
     subtitle: "Put your life in the hands of a computer",
-    options: ["One", "Two"]
+    options: []
 };
 
-var template = React.createElement(
-    "div",
-    null,
-    React.createElement(
-        "h1",
-        null,
-        navigation.title
-    ),
-    navigation.subtitle && React.createElement(
-        "p",
-        null,
-        navigation.subtitle
-    ),
-    React.createElement(
-        "p",
-        null,
-        navigation.options.length > 0 ? "Here are your options" : "no options"
-    ),
-    React.createElement(
-        "ol",
+var onFormSubmit = function onFormSubmit(e) {
+    e.preventDefault();
+
+    var option = e.target.elements.option.value;
+
+    if (option) {
+        navigation.options.push(option);
+        e.target.elements.option.value = "";
+        renderNavigation();
+    }
+    console.log("form submitted");
+};
+
+var onMakeDecision = function onMakeDecision() {
+    var randomNum = Math.floor(Math.random() * navigation.options.length);
+    var option = navigation.options[randomNum];
+    alert(option);
+};
+
+var removeAll = function removeAll() {
+    navigation.options.length = 0; // or navigation.options = [];
+    renderNavigation();
+};
+
+var renderNavigation = function renderNavigation() {
+    var template = React.createElement(
+        "div",
         null,
         React.createElement(
-            "li",
+            "h1",
             null,
-            " Item one"
+            navigation.title
+        ),
+        navigation.subtitle && React.createElement(
+            "p",
+            null,
+            navigation.subtitle
         ),
         React.createElement(
-            "li",
+            "p",
             null,
-            " Item two"
+            navigation.options.length > 0 ? "Here are your options" : "no options"
         ),
         React.createElement(
-            "li",
+            "button",
+            { disabled: navigation.options.length === 0, onClick: onMakeDecision },
+            "What should I do?"
+        ),
+        React.createElement(
+            "button",
+            { onClick: removeAll },
+            "Remove All"
+        ),
+        React.createElement(
+            "ol",
             null,
-            " Item three"
+            navigation.options.map(function (option) {
+                return React.createElement(
+                    "li",
+                    { key: option },
+                    option
+                );
+            })
+        ),
+        React.createElement(
+            "form",
+            { onSubmit: onFormSubmit },
+            React.createElement("input", { type: "text", name: "option" }),
+            React.createElement(
+                "button",
+                null,
+                "Add Option"
+            )
         )
-    )
-);
+    );
 
-var count = 0;
-var addOne = function addOne() {
-    console.log("addOne");
+    ReactDOM.render(template, appRoot);
 };
-var minusOne = function minusOne() {
-    console.log("minusOne");
-};
-var setUpReset = function setUpReset() {
-    console.log("Reset");
-};
-var templateTwo = React.createElement(
-    "div",
-    null,
-    React.createElement(
-        "h1",
-        null,
-        "Count: ",
-        count
-    ),
-    React.createElement(
-        "button",
-        { id: "my-id", className: "button", onClick: addOne },
-        "+1"
-    ),
-    React.createElement(
-        "button",
-        { onClick: minusOne },
-        "-1"
-    ),
-    React.createElement(
-        "button",
-        { onClick: setUpReset },
-        "Reset"
-    )
-);
 
-console.log(templateTwo);
 var appRoot = document.getElementById("app");
 
-//ReactDOM.render(template, appRoot);
-ReactDOM.render(templateTwo, appRoot);
+renderNavigation();
