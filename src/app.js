@@ -1,93 +1,22 @@
-class IndecisionApp extends React.Component {
-    render() {
-        const title = "Indecision";
-        const subtitle = "Put your life in the hands of a computer";
-        const options = ["Thing One", "Thing Two", "Thing Four"];
-        return (
-            <div>
-                <Header title={title} subtitle={subtitle}/>
-                <Action />
-                <Options options={options}/>
-                <AddOption />
-            </div>            
-        )
-    }
-}
+ import React from 'react';
+ import ReactDOM from 'react-dom';
+ import IndecisionApp from './components/IndecisionApp';
 
-class Header extends React.Component {
-    render() {
-        console.log(this.props);
-        return (
-            <div>
-                <h1>{this.props.title}</h1>
-                <h2>{this.props.subtitle}</h2>
-            </div>
-        )
-    }
-}
+ReactDOM.render(<IndecisionApp />, document.getElementById("app"));
 
-class Action extends React.Component {
-    handlePick() {
-        alert("handlePick");
-    }
-    render() {
-        return (
-            <div>
-                <button onClick={this.handlePick}>What should I do?</button>
-            </div>
-        )
-    }
-}
+// IndecisionApp.defaultProps = {
+//     options: [ ]
+// }
 
-class Options extends React.Component {
-    handleRemoveAll() {
-        alert("removed!");
-    }
-    render() {
-        return (
-            <div>
-                <button onClick={this.handleRemoveAll}>Remove All</button>
-                {
-                    this.props.options.map((option) =><Option key={option} optionText={option} /> )
-                }
-                
-            </div>
-        )
-    }
-}
-
-class Option extends React.Component {
-    render() {
-        return (
-            <div>
-                {this.props.optionText}
-            </div>
-        )
-    }
-}
-
-class AddOption extends React.Component {
-    handleAddOption(e) {
-        e.preventDefault();
-    
-        const option = e.target.elements.option.value.trim();
-    
-        if(option) {
-            e.target.elements.option.value = "";
-            alert("option added!");
-        }
-    }    
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.handleAddOption}>
-                    <input type="text" name="option"/>
-                    <button>Add Option</button>
-                </form> 
-            </div>
-        )
-    }
-}
+//stateless functional component
+// const User = (props) => {
+//     return (
+//         <div>
+//           <p>Name: {props.name}</p>
+//           <p>Age: {props.age}</p>
+//         </div>
+//     )
+// }
 // const jsx = (
 //     <div>
 //         <Header />
@@ -96,5 +25,24 @@ class AddOption extends React.Component {
 //         <AddOption />
 //     </div>
 // );
+//babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch
+//live-server public
+//import {'./utils.js'};
+//import subtract, { square, add } from './utils.js';
+ //import isSenior, { isAdult, canDrink } from './person.js';
+ //import validator from 'validator';
 
-ReactDOM.render(<IndecisionApp />, document.getElementById("app"));
+ //console.log(validator.isEmail('test@gmail.com'));
+
+//  console.log('app.js is running!!!!!');
+//  console.log(square(4));
+//  console.log(add(4,9));
+//  console.log(subtract(100, 3));
+
+// console.log(isAdult(11));
+// console.log(isAdult(43));
+
+// console.log(canDrink(20));
+// console.log(canDrink(23));
+
+//console.log(isSenior(67));
